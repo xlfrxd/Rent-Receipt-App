@@ -26,32 +26,29 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
-  
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-Future<void> _selectDate(BuildContext context) async {
-      DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(), 
-        firstDate: DateTime(1950), 
-        lastDate: DateTime(2150)
-      );
-      if (picked != null && picked != DateTime.now()){
-        picked = DateTime.now();
-      }
-    }
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
-  
+  DateTime selectedDate = DateTime.now(); // Initial date
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2150));
+    if (picked != null && picked != DateTime.now()) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 
   Widget build(BuildContext context) {
-
-  String selectedPaymentType = "Full"; 
-
+    String selectedPaymentType = "Full";
 
     return Scaffold(
       appBar: AppBar(
@@ -62,11 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextButton(onPressed: () async {
-              await _selectDate(context);
-            }, 
-            child: Text("${DateTime.now().toLocal()}".split(' ')[0],
-            style: TextStyle(fontSize: 16),)),
+            TextButton(
+                child: Text(
+                  "${selectedDate.toLocal()}".split(' ')[0],
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () => _selectDate(context),
+                
+                // TODO: Handle user input
+                ),
             TextField(
               decoration: InputDecoration(
                   labelText: "Received From", border: OutlineInputBorder()),
@@ -77,48 +78,49 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               decoration: InputDecoration(
                   labelText: "Address", border: OutlineInputBorder()),
-            onChanged: (value) {
-              // TODO: Handle user input
-            },
+              onChanged: (value) {
+                // TODO: Handle user input
+              },
             ),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "Sum of Pesos",
-                border: OutlineInputBorder()
-              ),
+                  labelText: "Sum of Pesos", border: OutlineInputBorder()),
               validator: (value) {
-                if(value==null || value.isEmpty){
+                // TODO: Handle user input
+                if (value == null || value.isEmpty) {
                   return "Please enter an amount";
                 }
                 return null;
               },
             ),
-            DropdownButtonFormField(items: ["Full", "Partial"].map((String value) {
-              return DropdownMenuItem<String>(value: value, child: Text(value));
-            }).toList(), onChanged: (newValue) {
-              selectedPaymentType = newValue!;
-            },
-            decoration: InputDecoration(
-              labelText: "Payment Type",
-              border: OutlineInputBorder()
-            ),
+            DropdownButtonFormField(
+              items: ["Full", "Partial"].map((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+              onChanged: (newValue) {
+                selectedPaymentType = newValue!;
+              },
+              decoration: InputDecoration(
+                  labelText: "Payment Type", border: OutlineInputBorder()),
             ),
             GestureDetector(
               onPanUpdate: (details) {
-                // TODO:Capture Signature Drawing
+                // TODO: Capture Signature Drawing
               },
               child: Container(
                 width: double.infinity,
                 height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black)
-                ),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
               ),
             ),
-            ElevatedButton(onPressed: () {
-              // TODO:Handle receipt creation
-            }, child: Text("Generate Receipt"))
+            ElevatedButton(
+                onPressed: () {
+                  // TODO:Handle receipt creation
+                },
+                child: Text("Generate Receipt"))
           ],
         ),
       ),
