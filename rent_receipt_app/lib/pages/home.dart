@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.blueGrey,
                 onPressed: () {
                   setState(() {
-                    //TODO: Implement Account Page
+                    //TODO: Implement reminders for bill due dates of tenants 
                   });
                 },
                 icon: Icon(CupertinoIcons.bell_fill)),
