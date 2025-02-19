@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                     itemCount: units.length,
                     itemBuilder: (context, index) {
-                      return Container(
+                      return Container( //TODO: Style container (axis?) of units properly
                         margin: EdgeInsets.all(16),
                         height: 64,
                         color: Colors.blueGrey,
