@@ -60,17 +60,40 @@ class _HomePageState extends State<HomePage> {
                 height: 32,
               ),
               Container(
-                height: 360,
+                height: 600,
                 color: Colors.grey,
                 child: ListView.builder(
                     itemCount: units.length,
                     itemBuilder: (context, index) {
-                      return Container( //TODO: Style container (axis?) of units properly
+                      return Container(
+                        //TODO: Style container (axis?) of units properly
                         margin: EdgeInsets.all(16),
-                        height: 64,
-                        color: Colors.blueGrey,
-                        child: Text(units[index].name,
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        padding: EdgeInsets.all(8),
+                        height: 250,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            color: Colors.blueGrey),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                  color: Colors.green),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(units[index].name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ],
+                        ),
                       );
                     }),
               )
